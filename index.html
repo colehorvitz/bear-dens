@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" href="../styles.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/solid-auth-client@2.3.0/dist-lib/solid-auth-client.bundle.js"></script> -->
+  <!-- <script src="./common/js/rdflib.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/rdflib@0.20.1/dist/rdflib.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+  <div class="header"></div>
+  <div class="search-container">
+    <form id="form">
+      <input type="text" id="search-bar" placeholder="Search by dorm name"></input>
+      <select name="building">
+        <option value="Building" disabled selected="Building">Building</option>
+        <option value="No Preference">No Preference</option>
+        <option value="219 Bowen Street">219 Bowen Street</option>
+        <option value="315 Thayer Street">315 Thayer Street</option>
+        <option value="111 Brown Street">111 Brown Street</option>
+        <option value="Barbour">Barbour Hall</option>
+        <option value="Barbour Apts">Barbour Hall Apts.</option>
+        <option value="Buxton">Buxton House</option>
+        <option value="Champlin">Champlin Hall</option>
+        <option value="Chapin">Chapin House</option>
+        <option value="Diman">Diman House</option>
+        <option value="Goddard">Goddard House</option>
+        <option value="Grad Center A">Grad Center A</option>
+        <option value="Grad Center B">Grad Center B</option>
+        <option value="Grad Center C">Grad Center C</option>
+        <option value="Grad Center D">Grad Center D</option>
+        <option value="Gregorian Quad A">Gregorian Quad A</option>
+        <option value="Gregorian Quad B">Gregorian Quad B</option>
+        <option value="Harkness">Harkness House</option>
+        <option value="Hegeman A">Hegeman A</option>
+        <option value="Hegeman B">Hegeman B</option>
+        <option value="Hegeman C">Hegeman C</option>
+        <option value="Hegeman D">Hegeman D</option>
+        <option value="Hegeman E">Hegeman E</option>
+        <option value="Hope">Hope College</option>
+        <option value="King">King House</option>
+        <option value="Littlefield">Littlefield Hall</option>
+        <option value="Machado">Machado House</option>
+        <option value="Marcy">Marcy</option>
+        <option value="Middle Caswell">Middle Caswell Hall</option>
+        <option value="Minden">Minden</option>
+        <option value="New Pembroke #1">New Pembroke #1</option>
+        <option value="New Pembroke #2">New Pembroke #2</option>
+        <option value="New Pembroke #3">New Pembroke #3</option>
+        <option value="New Pembroke #4">New Pembroke #4</option>
+        <option value="North Caswell">North Caswell Hall</option>
+        <option value="North Wayland">North Wayland House</option>
+        <option value="Olney">Olney House</option>
+        <option value="Perkins">Perkins Hall</option>
+        <option value="Sears">Sears House</option>
+        <option value="Slater">Slater Hall</option>
+        <option value="South Caswell">South Caswell Hall</option>
+        <option value="South Wayland">South Wayland House</option>
+        <option value="West">West House</option>
+        <option value="Young Orchard #10">Young Orchard #10</option>
+        <option value="Young Orchard #2">Young Orchard #2</option>
+        <option value="Young Orchard #4">Young Orchard #4</option>
+      </select>
+      <select name="roomtype">
+        <option value="Size" disabled selected="Size">Room Size</option>
+        <option value="No Preference">No Preference</option>
+        <option value="Single">Single</option>
+        <option value="Double">Double</option>
+        <option value="Triple">Triple</option>
+      </select>
+      <select name="floor">
+        <option value="Floor" disabled selected="Floor">Floor Level</option>
+        <option value="No Preference">No Preference</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <button type="button" id="update" onclick="getDorms()">Submit</button><br />
+    </form>
+    <div id="nav-right-container">
+      <button onclick="switchView()"><i id="list-view" class="material-icons">view_list</i></button>
+      <p class="saved">
+        Saved Dorms
+      </p>
+    </div>
+  </div>
+  <div id="list-container"></div>
+  <div id="card-container"></div>
+  <div id="spinner"></div>
+  <div id="overlay">
+    <div class="expanded-card">
+      <p class="expanded-card-exit"></p>
+      <div class="expanded-card-title-container">
+        <div>
+          <h1 class="expanded-card-title">TEST ROOM 101</h1>
+          <h2 class="expanded-card-location">Wriston Quad</h2>
+        </div>
+        <div class="expanded-card-button-holder">
+          <a href="" ><p class="expanded-card-link expanded-card-map">
+          Maps</p></a>
+          <a href="" ><p class="expanded-card-link expanded-card-save">
+            Save</p></a>
+        </div>
+      </div>
+      <div class="thumbnail-holder">
+        <img src="../img/brown1.png" class="imgs-thumbnail"></img>
+        <img src="../img/brown2.png" class="imgs-thumbnail"></img>
+      </div>
+      <div class="expanded-card-grid">
+        <p class="info-titles expanded-card-text">Type</p>
+        <p class="info-titles expanded-card-text">Size</p>
+        <p class="info-titles expanded-card-text">Floor</p>
+        <p class="info-titles expanded-card-text">Address</p>
+        <p class="info-text expanded-card-text">Single</p>
+        <p class="info-text expanded-card-text">175sqft</p>
+        <p class="info-text expanded-card-text">4</p>
+        <p class="info-text expanded-card-text">101 Brown Street</p>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  var graph = "https://kingsley.idehen.net/public_home/kidehen/Public/Linked%20Data%20Documents/CSV%20Docs/TestHousingData.csv" ;
+  var endpoint = "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=" ;
+  var form = document.getElementById('form');
+  var cardContainer = document.getElementById('card-container');
+  var listContainer = document.getElementById('list-container');
+  var imgs=["../img/brown1.png", '../img/brown2.png', "../img/brown3.png", "../img/brown4.png"]
+  var input=[]
+  getDorms()
+  // This function fetches the query results and returns them in json
+  async function getDorms() {
+  	await formSubmit();
+    cardContainer.innerHTML=""
+    listContainer.innerHTML=""
+    showSpinner();
+  	var graph = "https://kingsley.idehen.net/public_home/kidehen/Public/Linked%20Data%20Documents/CSV%20Docs/TestHousingData.csv";
+  	var endpoint = "https://linkeddata.uriburner.com/sparql?default-graph-uri=&query=";
+  	var variables = ["name", "building", "size", "floor"];
+  	var query = "\
+	prefix dorm: \
+	<http://kingsley.idehen.net/DAV/home/jordan/Brown%20Housing%20Project/TestData1.csv#> \
+	prefix dormDB: \
+	<http://kingsley.idehen.net/DAV/home/jordan/Brown%20Housing%20Project/TestData1.csv> \
+	\
+	SELECT DISTINCT ?dorm  \
+	xsd:string(?name) AS ?name \
+	xsd:string(?location) AS ?location \
+	xsd:string(?building) AS ?building \
+	xsd:string(?number) AS ?number \
+	xsd:string(?floor) AS ?floor \
+	xsd:string(?size) AS ?size \
+	\
+	WHERE {  \
+	GRAPH <http://kingsley.idehen.net/DAV/home/jordan/Brown%20Housing%20Project/TestData1.csv>  { \
+	?dorm a dorm:class ; \
+	dorm:Name ?name ; \
+	dorm:Location ?location ; \
+	dorm:Building ?building ; \
+	dorm:Room_Number ?number ; \
+	dorm:Floor ?floor ; \
+	dorm:Type ?size . "
+
+  	for (i = 0; i < input.length; i++) {
+  		if (input[i]) {
+  			query += "\n" + "FILTER (xsd:string(?" + variables[i] + ")" + " = " + "'" + input[i] + "'" + ") . \n"
+  		}
+  	}
+
+  	var final_query = query + " } }";
+  	let url = endpoint + encodeURIComponent(final_query) + "&should-sponge=&format=application%2Fsparql-results%2Bjson";
+
+	console.log("Query URL: " + url)
+
+  	const options = {
+  		method: 'GET',
+  		headers: {
+  			'Content-type': 'application/sparql-results+json; charset=UTF-8',
+  		},
+  		credentials: 'include',
+  		mode: 'cors',
+  		crossDomain: true,
+  	};
+
+  	try {
+  		var resp = await fetch(url, options)
+
+  			.then((res) => res.json())
+  			.then(data => {
+
+          if (data.results.bindings.length==0){
+            noResults();
+          }
+  				if (data.results.bindings.length > 0) {
+  					for (i = 0; i < data.results.bindings.length; i++) {
+              	var currDorm = data.results.bindings[i];
+                createCard(currDorm);
+                createList(currDorm);
+  					}
+  				} else {
+  					console.log("No data returned by query");
+  				}
+  			})
+  	} catch (e) {
+  		console.error('Table Refresh Failed', e);
+  		alert('Table Refresh Failed ' + e);
+  	}
+    hideSpinner();
+  }
+
+  function formSubmit() {
+    input = []
+    for (var f=0; f<form.elements.length;f++){
+      var currFilter = form.elements[f].value;
+      if (currFilter == "" || currFilter == "No Preference" || currFilter == "Size" || currFilter == "Floor"|| currFilter == "Building"){
+        input.push(null);
+      }
+      else{
+        input.push(currFilter);
+      }
+    }
+  }
+  /*This is the method that generates the cards for each dorm.
+  It is doing so through DOM manipulation
+  There is probably a more efficient way to do this! */
+  function createCard(curr){
+    var attrs=[curr.location.value, curr.size.value, curr.floor.value, curr.number.value];
+    var attrTitles=["Location", "Room Type", "Floor Level", "Room Number"]
+    var new_dorm_div = document.createElement("div");
+    var dorm_img_div = document.createElement("div");
+    var dormImg =  document.createElement("img");
+    var image_overlay = document.createElement("div");
+    var dormName = document.createElement("h1");
+    var infoBox = document.createElement("div");
+    var save_dorm = document.createElement("h4");
+    var save_plus = document.createElement("p");
+    save_plus.innerHTML="+";
+    new_dorm_div.className="card";
+    dorm_img_div.className="image-box";
+    image_overlay.className="image-overlay";
+    dormName.className="dorm-name";
+    dormName.innerHTML=curr.name.value;
+    infoBox.className="info-box";
+    save_dorm.className="save";
+    dorm_img_div.style.backgroundImage="url("+imgs[Math.floor(Math.random() * imgs.length)]+")";
+    cardContainer.append(new_dorm_div);
+    new_dorm_div.append(dorm_img_div);
+    dorm_img_div.append(image_overlay);
+    new_dorm_div.append(infoBox);
+    image_overlay.append(save_dorm);
+    save_dorm.append(save_plus);
+    image_overlay.append(dormName);
+    for (j=0; j<attrTitles.length; j++){
+      var attrTitleP= document.createElement("p");
+      attrTitleP.className="info-titles";
+      attrTitleP.innerHTML=attrTitles[j];
+      infoBox.append(attrTitleP);
+    }
+    for(k=0; k<attrs.length;k++){
+      var attrP= document.createElement("p");
+      attrP.innerHTML=attrs[k];
+      attrP.className="info-text";
+      infoBox.append(attrP);
+    }
+  }
+
+  function createList(curr){
+    var attrs=[curr.name.value, curr.location.value, curr.size.value, curr.floor.value, curr.number.value];
+    var list_item = document.createElement("div");
+    list_item.className="list-item";
+    listContainer.append(list_item);
+    for (var i=0; i<attrs.length;i++){
+      var container = document.createElement("div");
+      container.className="list-grid-container";
+      list_item.append(container);
+      var attrP = document.createElement("p");
+      attrP.innerHTML=attrs[i];
+      container.append(attrP);
+    }
+  }
+  function switchView(){
+    if (cardContainer.style.display=="none"){
+
+      cardContainer.style.display="grid";
+      listContainer.style.display="none"
+    }
+    else{
+      cardContainer.style.display="none";
+      listContainer.style.display="block"
+    }
+  }
+  function noResults(){
+    var no_results_text = document.createElement("h1");
+    no_results_text.className="no-results";
+    no_results_text.innerHTML="no dorms matched your input :("
+    cardContainer.append(no_results_text);
+  }
+
+  function showSpinner() {
+    document.getElementById("spinner").style.display = "block";
+  }
+
+  function hideSpinner() {
+    document.getElementById("spinner").style.display = "none";
+  }
+</script>
+</body>
+</html>

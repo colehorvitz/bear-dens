@@ -1,0 +1,337 @@
+h1, h2, p{
+  font-family: Helvetica;
+  margin:0;
+}
+
+/**material icon style **/
+#list-view{
+  padding-top:25%;
+}
+#list-view:hover{
+  opacity:.8;
+  cursor:pointer;
+}
+button{border:1px solid grey;
+  background-color:none;
+  border-radius:5px;}
+a {text-decoration:none;}
+.header{
+  width:100vw;
+  height:5vh;
+  background-color:grey;
+  display:none;
+}
+.search-container{
+  width:100vw;
+  height:12vh;
+  border-bottom:1px solid #E0E0E0;
+  display:flex;
+  align-items: center;
+  padding:0 1em;
+}
+#search-bar{
+  width:20em;
+  height:3em;
+  border-radius:5px;
+  border: none;
+  border:1px solid lightgrey;
+  padding:0 10px;
+}
+select{
+  height:3em;
+  background-color:white;
+  border:1px solid lightgrey;
+}
+#update{
+  height:3em;
+  width:6em;
+  background-color:#D32F2F;
+  color:white;
+  border-radius:5px;
+}
+#nav-right-container{
+  height:3em;
+  width:15em;
+  text-align:center;
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  justify-content: space-around;
+}
+.saved{
+  border:1px solid lightgrey;
+  margin-bottom:0;
+  padding:3px;
+  border-radius:5px;
+}
+/**CARD VIEW STYLES **/
+#card-container{
+  padding:1em;
+  width:100vw;
+  height:88vh;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  background-color:#F5F5F5;
+  overflow: auto;
+}
+.card{
+  border-radius:.75em;
+  height:22.5em;
+  background-color:#F5F5F5;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition:background-color .1s ease-in-out;
+}
+.card:hover{
+  background-color:#EEEEEE;
+  cursor:pointer;
+}
+.card:hover .save{
+  transform: scale(1);
+}
+.card:hover .dorm-name{
+  color:#EEEEEE;
+}
+
+.image-overlay{
+  width:100%;
+  background-color:rgba(21,21,21,.5);
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,.7) 100%);
+  height:4em;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:10px 15px;
+}
+
+.save{
+  background-color:#D32F2F;
+  box-shadow: 0px 12px 17px 2px rgba(0, 0, 0, 0.14),
+            0px 5px 22px 4px rgba(0, 0, 0, 0.12),
+            0px 7px 8px -4px rgba(0, 0, 0, 0.2);
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  align-self:flex-start;
+  margin-right:0;
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: transform .1s ease-in-out;
+  transform: scale(0);
+}
+.save p{
+  color:white;
+  font-weight:400;
+  margin:0;padding:0;
+  padding-bottom:14%;
+  font-size:32px;
+}
+.dorm-img{
+  height:60%;
+  width:100%;
+  object-fit:cover;
+  /**border-radius:.75em .75em 0 0;**/
+}
+.image-box{
+  height:75%;
+  width:100%;
+  border-radius:.75em .75em 0 0;
+  background-size:cover;
+  display:flex;
+  flex-flow:column wrap;
+  align-content:flex-end;
+}
+
+.info-box{
+  display:grid;
+  height:25%;
+  grid-template-columns: repeat(4, 1fr);
+  font-size:1em;
+  padding: 12px 16px 12px;
+}
+.info-titles{
+  color:#757575;
+  margin:0;
+}
+.info-text{
+  margin-bottom:6px;
+}
+.dorm-name{
+  font-size:2em;
+  font-weight:600;
+  margin:0;
+  color:white;
+  grid-column:1/5;
+  text-align:left;
+  transition:opacity .1s ease-in-out;
+}
+
+#spinner{
+   position:fixed;
+   width:100%;
+   left:0;right:0;top:0;bottom:0;
+   background-color: rgba(255,255,255,0.7);
+   z-index:1;
+   display:none;
+}
+
+@keyframes spin {
+ from {
+     transform: rotate(0deg);
+ } to {
+     transform: rotate(360deg);
+ }
+}
+
+#spinner::after {
+   content:'';
+   display:block;
+   position:absolute;
+   left:48%;top:40%;
+   width:40px;height:40px;
+   border-style:solid;
+   border-color:black;
+   border-top-color:transparent;
+   border-width: 4px;
+   border-radius:50%;
+   -webkit-animation: spin .8s linear infinite;
+   animation: spin .8s linear infinite;
+}
+
+.dorm-expanded{
+  position:absolute;
+  background-color:black;
+  left:25%;
+  width:75%;
+  height:75%;
+}
+
+.no-results{
+  font-style:italic;
+  color:lightgrey;
+  grid-row:2;
+  grid-column:1/4;
+  text-align:center;
+  font-size:3em;
+}
+/** Styles for card-overlay view **/
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin:0 auto;
+  display:none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color:rgba(0,0,0,.5);
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  }
+.expanded-card{
+  position: fixed;
+  width:50%;
+  height:66%;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius:.75em;
+  padding:36px;
+  z-index:3;
+}
+.expanded-card-exit{
+  color:#9E9E9E;
+  text-align:right;
+  font-size:24px;
+  margin:0;
+  content:'x';
+}
+.expanded-card-title-container{
+  display:flex;
+  width:100%;
+  border-bottom: 1px solid lightgrey;
+  margin:10px 0;
+}
+.expanded-card-title{
+  font-size:2.5em;
+  color:black;
+  margin:10px 0;
+}
+.expanded-card-location{
+  font-size:1.25em;
+  color:#9E9E9E;
+  margin:10px 0;
+  font-weight:400;
+}
+.expanded-card-link{
+  padding:0 12px;
+  font-size:1.25em;
+}
+.expanded-card-save{
+  color:#D32F2F;
+  border:1px solid #D32F2F;
+  border-radius:6px;
+}
+.expanded-card-map{
+  color:#42A5F5;
+}
+.expanded-card-button-holder{
+  display:flex;
+  margin-right:0;
+  margin-left:auto;
+}
+.thumbnail-holder{
+  display:flex;
+  margin:20px 0;
+  justify-content: space-around;
+}
+.imgs-thumbnail{
+  margin:12px;
+  margin:0;
+  width:49%;
+  height:13em;
+  border:1px solid lightgrey;
+}
+.expanded-card-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.expanded-card-text{
+  font-size:1.25em;
+}
+
+/*********************/
+/**LIST VIEW STYLES**/
+/*********************/
+#list-container{
+  width:66vw;
+  display:none;
+  height:88vh;
+  overflow: auto;
+}
+#list-container .list-item:nth-child(odd){
+  background-color:#F5F5F5;
+}
+#list-container .list-item:nth-child(even){
+  background-color:white;
+}
+.list-item{
+    height:5em;
+    width:100%;
+    display:grid;
+    grid-template-columns: 33% 1fr 1fr 1fr 1fr;
+    padding:0 10px;
+}
+.list-grid-container{
+  display:flex;
+  align-items:center;
+}
+.list-grid-container p{
+  margin:0;
+}
